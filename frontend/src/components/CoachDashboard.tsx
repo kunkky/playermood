@@ -5,6 +5,7 @@ import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "../utils/BaseUrl";
+import { Link } from "react-router-dom";
 
 interface TrainingSession {
   id: string;
@@ -238,10 +239,17 @@ const CoachDashboard = () => {
     <div className="h-screen w-screen bg-gray-50 flex p-4 pb-20 relative">
       <Toaster />
       <div className="w-full h-full">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          Training Sessions
-        </h1>
-
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+            Training Sessions
+          </h1>
+          <div>
+            {" "}
+            <Link to="/" className="text-blue-600 font-bold">
+              Go Back
+            </Link>
+          </div>
+        </div>
         {error && (
           <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
             <p>{error}</p>

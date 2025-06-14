@@ -5,6 +5,8 @@ import axios from "axios";
 import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "../utils/BaseUrl";
+import { Link } from "react-router-dom";
+import { FiPlus } from "react-icons/fi";
 
 const MoodBoard = () => {
   type Mood = {
@@ -16,7 +18,6 @@ const MoodBoard = () => {
 
   type TrainingSession = {
     title: string;
-    // Add other properties if your API returns more data
   };
 
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
@@ -169,7 +170,6 @@ const MoodBoard = () => {
           <span className="text-blue-800 text-2xl">🌙</span>
         )}
       </button>
-
       <AnimatePresence>
         {error ? (
           <motion.div
@@ -186,10 +186,14 @@ const MoodBoard = () => {
             >
               {error}
             </h2>
+            <Link to="/coach" className="text-blue-400 hover:underline">
+              {" "}
+              Create one if you are a coach{" "}
+            </Link>
             <p
               className={`mb-6 ${darkMode ? "text-gray-300" : "text-gray-600"}`}
             >
-              Please check back later.
+              Or Please check back later.
             </p>
           </motion.div>
         ) : submitted ? (
@@ -311,6 +315,20 @@ const MoodBoard = () => {
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      <div className="fixed bottom-6 right-6 flex items-center flex-col cursor-pointer">
+        <Link
+          to="/coach"
+          className=" bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center cursor-pointer"
+          aria-label="Go to admin or coach page "
+        >
+          <iframe
+            src="https://lottie.host/embed/167016d9-2e0a-418d-8957-a208056e2594/LSrUb4B7hE.lottie"
+            className="w-14 h-14"
+          ></iframe>
+        </Link>
+        <p className="text-xs font-bold">Coach</p>
+      </div>
     </div>
   );
 };
