@@ -6,7 +6,6 @@ import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "../utils/BaseUrl";
 import { Link } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
 
 const MoodBoard = () => {
   type Mood = {
