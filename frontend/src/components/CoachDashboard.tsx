@@ -4,6 +4,7 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { BASE_URL } from "../utils/BaseUrl";
 
 interface TrainingSession {
   id: string;
@@ -18,8 +19,6 @@ interface TrainingSession {
 interface ApiError {
   error?: string;
 }
-
-const API_BASE_URL = "http://localhost/teampulse/backend";
 
 const CoachDashboard = () => {
   const [sessions, setSessions] = useState<TrainingSession[]>([]);
@@ -54,7 +53,7 @@ const CoachDashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get<TrainingSession[]>(
-        `${API_BASE_URL}/get_training_mood.php`,
+        `${BASE_URL}/get_training_mood.php`,
         { params: { user: fingerprint } }
       );
       setSessions(response.data);
@@ -84,7 +83,7 @@ const CoachDashboard = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.post<{ id: string }>(
-        `${API_BASE_URL}/post_training.php`,
+        `${BASE_URL}/post_training.php`,
         { title: newSessionTitle }
       );
 
@@ -127,15 +126,12 @@ const CoachDashboard = () => {
     setDeletingId(id);
 
     try {
-      const deleteData = await axios.delete(
-        "http://localhost/teampulse/backend/delete_section.php",
-        {
-          data: { id },
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const deleteData = await axios.delete(`${BASE_URL}/delete_section.php`, {
+        data: { id },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (deleteData.data.success) {
         setSessions((prev) => prev.filter((session) => session.id !== id));
         setError(null);

@@ -4,6 +4,7 @@ import { getDayOrNight } from "../utils/getDayOrNight";
 import axios from "axios";
 import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import toast, { Toaster } from "react-hot-toast";
+import { BASE_URL } from "../utils/BaseUrl";
 
 const MoodBoard = () => {
   type Mood = {
@@ -45,9 +46,7 @@ const MoodBoard = () => {
     const fetchLatestTraining = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(
-          "http://localhost/teampulse/backend/get_latest_training.php"
-        );
+        const response = await axios.get(`${BASE_URL}/get_latest_training.php`);
         if (response.data && response.data.title) {
           setTrainingSession(response.data);
         } else {
@@ -120,14 +119,11 @@ const MoodBoard = () => {
     setIsLoading(true);
 
     try {
-      const postMood = await axios.post(
-        "http://localhost/teampulse/backend/post_mood.php",
-        {
-          user: fingerprint,
-          mood: mood.value,
-          title: trainingSession.title,
-        }
-      );
+      const postMood = await axios.post(`${BASE_URL}/post_mood.php`, {
+        user: fingerprint,
+        mood: mood.value,
+        title: trainingSession.title,
+      });
 
       if (postMood.data) {
         toast.success(postMood.data.message);
